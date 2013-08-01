@@ -1,0 +1,100 @@
+{# See: https://docs.djangoproject.com/en/dev/topics/forms/#looping-over-the-form-s-fields #}
+{# https://docs.djangoproject.com/en/dev/ref/models/fields/ #}
+{% spaceless %}
+<div class="control-group {% if field.errors %}error{% endif %} ">
+    <label class="control-label" for="{{ field.auto_id }}"
+        {% if field.errors %}
+            class="error"
+        {% endif %}>
+
+        {{ field.label }}
+
+        {% if field.field.required %}
+            <span class="required">*</span>
+        {% endif %}
+    </label>
+    <div class="controls">
+    {% if field.field.tag == 'select' %}
+        <select
+            id="{{ field.auto_id }}"
+            name="{{ field.name }}"
+            class="{{ field.field.css_class }}"
+            {{ field.field.attributes|safe }}
+            {{ field.field.field_validators|safe }}
+            {% if field.field.required %}
+                data-required="true" 
+            {% endif %} 
+        >
+        {% for choice_id, choice_label in field.field.choices %}
+            <option 
+                {% if choice_id %}
+                    value="{{ choice_id }}"
+                {%else%}
+                    value=""
+                {% endif %}
+                {% if field.value == choice_id %}
+                    selected
+                {% endif %}
+            >{{ choice_label }}</option>
+        {% endfor %}
+        </select>
+    {% elif field.field.tag == 'textarea' %}
+        <textarea
+            id="{{ field.auto_id }}"
+            name="{{ field.name }}"
+            placeholder="{{ field.help_text }}"
+            class="{{ field.field.css_class }}"
+            {{ field.field.attributes|safe }}
+            {{ field.field.field_validators|safe }}
+            {% if field.field.required %}
+                data-required="true" 
+            {% endif %} 
+            
+        >{{ field.value }}</textarea>
+
+    {% else %}
+
+        <input
+            id="{{ field.auto_id }}"
+            name="{{ field.name }}" 
+            type="{{ field.field.type }}"
+            {% if field.field.type == 'checkbox' and field.value == True %}
+                 checked
+            {% endif %} 
+            {% if field.errors %}
+                 class="error"
+            {% endif %} 
+            {% if field.value and field.value != 'None' %}
+                value="{{ field.value }}"
+            {% endif %}
+            class="{{ field.field.css_class }}"
+            {% if field.field.type == 'text' or field.field.type == 'email' or field.field.type == 'number'  or field.field.type == 'tel' or field.field.type == 'url' %}
+                placeholder="{{ field.help_text }}"
+            {% endif %} 
+            {{ field.field.attributes|safe }}
+            {{ field.field.field_validators|safe }}
+            {% if field.field.required %}
+                data-required="true" 
+            {% endif %} 
+            
+        >
+        <!-- <span class="help-inline"><i class="icon-check-sign"></i></span> -->
+    {% endif %}
+
+    {% if field.field.type == 'checkbox' %}
+        <span class="help-inline">{{ field.help_text|safe }}</span>
+    {% endif %} 
+
+
+    {% if field.errors %}
+        <span class="help-inline">
+        {% for error in field.errors %}
+            {{ error|escape }}<br>
+        {% endfor %}
+        </span>
+    {% endif %}
+    </div><!-- //.controls -->
+
+
+</div><!-- //.control-group for {{ field.auto_id }} --> 
+{% endspaceless %}

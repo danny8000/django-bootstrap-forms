@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock title %}</title>
+
+        <link rel="stylesheet/less" href="{{STATIC_URL}}django_bootstrap_forms/css/django_bootstrap_forms.less">
+        <script src="{{STATIC_URL}}django_bootstrap_forms/vendor/jquery/js/jquery.min.js"></script>
+        <script src="{{STATIC_URL}}django_bootstrap_forms/vendor/less/js/less.min.js"></script>
+
+        {% block head %}{% endblock head %}
+    </head>
+    <body>
+
+        {% include "django_bootstrap_forms/partial/_header.html" %}
+
+        <section>
+            <!-- BLOCK CONTENT START -->
+            {% block content %}{% endblock content %}
+            <!-- BLOCK CONTENT END -->
+        </section>
+
+        {% include "django_bootstrap_forms/partial/_footer.html" %}
+
+        <!-- BLOCK SCRIPTS START -->
+        {% block scripts %}{% endblock scripts %}
+        <!-- BLOCK SCRIPTS END -->
+
+    </body>
+</html>

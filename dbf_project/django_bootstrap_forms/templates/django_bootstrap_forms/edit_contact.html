@@ -1,0 +1,91 @@
+{% extends "django_bootstrap_forms/base/base_bootstrap.html" %}
+
+{% block title %}Edit {{ contact.first_name }} {{ contact.last_name }} using Bootstrap{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span8">
+            
+            <h3>Edit Contact: {{ contact.first_name }} {{ contact.last_name }}</h3>
+
+            <form action="{% url 'django_bootstrap_forms:edit_contact' contact.id %}" method="post" id="edit-contact-form" class="form-horizontal" novalidate="novalidate">
+                {% csrf_token %}
+                
+                {% for hidden in contact_form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                {% if contact_form.non_field_errors %}
+                    <div data-alert class="alert-box alert round">
+                        {{ contact_form.non_field_errors }}
+                    </div>
+                {% endif %}
+                <!--
+                {% if contact_form.errors %}
+                    <div data-alert class="alert-box alert round">
+                        {{ contact_form.errors }}
+                    </div>
+                {% endif %}
+                -->
+
+                <fieldset>
+                    <legend>Update your account</legend>
+   
+                            
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.first_name %}
+      
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.last_name %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.email %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.password %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.phone %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.state %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.note %}
+
+                            {% include "django_bootstrap_forms/partial/_input_form_bootstrap.html" with field=contact_form.agree %}
+
+                            <div class="form-actions">
+                                <div style="text-align: center; margin-top: 1em;">
+                                    <input type="submit" value="Update Account" name="submit" id="submit" class="btn btn-primary" style="margin-right: 2em">
+                                    <a href="/django_bootstrap_forms/" class="btn ">Cancel</a>
+                                </div>
+                            </div>
+
+
+                </fieldset>
+            </form>
+        </div><!-- //.span8 --> 
+
+        <div class="span4">
+            <h4>Bootstrap plus Parsley.js</h4>
+            <p>This form demonstrates both client and server-side validation. The client side validation is done with Parsley.JS. The server-side validation is done with Django Model Forms.</p>
+        </div>
+    </div><!-- //.row-fluid -->
+</div><!-- //container-fluid"> -->
+{% endblock content %}
+
+
+{% block scripts %} 
+<script>
+    $(document).ready(function () {
+        $('#edit-contact-form').parsley({
+            successClass: 'success',
+            errorClass: 'error',
+            errors: {
+                classHandler: function(el) {
+                    return $(el).closest('.control-group');
+                },
+                errorsWrapper: '<span class=\"help-inline\"></span>',
+                errorElem: '<span></span>'
+            }
+        });
+    });
+</script>
+{% endblock scripts %} 

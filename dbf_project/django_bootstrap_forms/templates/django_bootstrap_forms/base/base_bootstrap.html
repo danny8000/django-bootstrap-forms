@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock title %}</title>
+
+        <!-- CSS -->
+        <link href="{{STATIC_URL}}django_bootstrap_forms/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="{{STATIC_URL}}django_bootstrap_forms/vendor/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}django_bootstrap_forms/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- JS -->
+        <script src="{{STATIC_URL}}django_bootstrap_forms/vendor/jquery/js/jquery.min.js"></script>
+        <script src="{{STATIC_URL}}django_bootstrap_forms/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="{{STATIC_URL}}django_bootstrap_forms/vendor/parsley/js/parsley.min.js"></script>
+
+        <style>
+
+            label .required {
+                color: #900;
+            }
+            .control-group.error input.parsley-validated {
+                color: #b94a48 !important;
+                background-color: #f2dede !important;
+                border: 1px solid #EED3D7 !important;
+            }        
+            .icon-check-sign {
+                color: green;
+            }
+            .control-group.success input, 
+            .control-group.success select, 
+            .control-group.success textarea {
+                color: #468847 !important;
+                background-color: #DFF0D8 !important;
+                border: 1px solid #D6E9C6 !important;
+            }
+            .control-group.success input:after {
+                content: "Valid";
+            }
+            .control-group.success input:before {
+                content: "Valid";
+            }
+        </style>
+
+        {% block head %}{% endblock head %}
+    </head>
+    <body>
+
+        {% include "django_bootstrap_forms/partial/_bootstrap_header.html" %}
+
+        <section>
+            <div class="container">
+            <!-- BLOCK CONTENT START -->
+            {% block content %}{% endblock content %}
+            <!-- BLOCK CONTENT END -->
+            </div>
+        </section>
+
+        {% include "django_bootstrap_forms/partial/_footer.html" %}
+
+        <!-- BLOCK SCRIPTS START -->
+        {% block scripts %}{% endblock scripts %}
+        <!-- BLOCK SCRIPTS END -->
+
+    </body>
+</html>
